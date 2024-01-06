@@ -7,19 +7,15 @@ const ListOrderLocal = () => {
                         <form name="sualoai">
                             <div className="form-group">
                                 <label for="exampleInputUsername1">Tổng tiền</label>
-                                <input type="text" className="form-control" id="name" value="" disabled placeholder="price" name="price" required />
+                                <input type="text" className="form-control" id="name" value="" disabled placeholder="" name="price" required />
                             </div>
                             <div className="form-group">
                                 <label for="exampleInputUsername1">Số lượng</label>
-                                <input type="number" className="form-control" id="name" value="" disabled placeholder="price" name="price" required />
+                                <input type="number" className="form-control" id="name" value="" disabled placeholder="" name="price" required />
                             </div>
                             <div className="form-group">
                                 <label for="exampleInputUsername1">Nhân viên</label>
-                                <input type="text" className="form-control" id="name" value="" disabled placeholder="price" name="price" required />
-                            </div>
-                            <div className="form-group">
-                                <label for="exampleInputUsername1">Bàn</label>
-                                <input type="number" className="form-control" id="name" value="" disabled placeholder="price" name="price" required />
+                                <input type="text" className="form-control" id="name" value="" disabled placeholder="" name="price" required />
                             </div>
                             <div className="form-group">
                                 <label for="exampleInputUsername1">Danh sách đã chọn</label>
@@ -36,17 +32,22 @@ const ListOrderLocal = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                    <td></td>
-                                    <td className="py-1">
-                                        <img src="../img/f" alt="image" />
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                        <span className="text-danger font-weight-bold"></span>
-                                    </td>
-
-                                    <td className="col-4" style={{whiteSpace: 'normal'}}></td>                      
+                                <tr>
+                                        <td>
+                                            1
+                                        </td>
+                                        <td>
+                                            <img src="https://cdn.tgdd.vn/Products/Images/44/313084/Slider/vi-vn-hp-15s-fq5229tu-i3-8u237pa-slider-2.jpg"/>
+                                        </td>
+                                        <td>
+                                            Laptop HP thinkpad i5 8/256GB 
+                                        </td>
+                                        <td>
+                                            12500000
+                                        </td>
+                                        <td>
+                                         Laptop HP sử dụng bộ vi xử lý Intel Core i5...
+                                        </td>
                                     </tr>
                                     
                                 </tbody>

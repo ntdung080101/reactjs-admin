@@ -10,14 +10,8 @@ const AddOrder = () => {
                                 <input type="text" className="form-control" id="name"  placeholder="Name" name="name" required />
                             </div>
                             <div className="form-group">
-                                <label for="exampleInputUsername1">Bàn</label>
-                                <select className="form-control" id="exampleInputUsername2" name="ban">
-                                    <option value='$maban'>$ban_so</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
                                 <label for="exampleInputUsername2">Giá</label>
-                                <input type="text" className="form-control" id="exampleInputUsername2" value="" disabled placeholder="price" name="price" required />
+                                <input type="text" className="form-control" id="exampleInputUsername2" value="" disabled placeholder="" name="price" required />
                             </div>
                         
                             <button type="submit" value="submit" className="btn btn-primary mr-2">Tạo</button>
@@ -71,7 +65,31 @@ const AddOrder = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    <tr>
+                                        <td>
+                                            1
+                                        </td>
+                                        <td>
+                                            <img src="https://cdn.tgdd.vn/Products/Images/44/313084/Slider/vi-vn-hp-15s-fq5229tu-i3-8u237pa-slider-2.jpg"/>
+                                        </td>
+                                        <td>
+                                            Laptop HP thinkpad i5 8/256GB 
+                                        </td>
+                                        <td>
+                                            12500000
+                                        </td>
+                                        <td>
+                                            Laptop văn phòng
+                                        </td>
+                                        <td>
+                                         Laptop HP sử dụng bộ vi xử lý Intel Core i5...
+                                        </td>
+                                        <td>
+                                        <a  href="xoa_don_hang_online.php?id=<?php echo $row['ma']?>">
+                        <i className="fa-solid fa-trash text-danger"></i>
+                        </a>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                     </div>

@@ -1,11 +1,17 @@
-import { Link } from "react-router-dom"
+import { Link, redirect } from "react-router-dom"
+import techCubeLogo from './../../Assets/techCubeLogo.png'
 
 export default function NavBar() {
+    const logout = () =>{
+        localStorage.removeItem('authAdmin');
+
+        window.location.reload(false);
+    }
     return (
         <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div className="navbar-brand-wrapper d-flex align-items-center">
             <Link  style={{width:'179px'}} className="navbar-brand brand-logo" to="/">
-                <img  style={{height: '49px', width:'150px'}} src="../img/logoblack.png" alt="logo" className="logo-dark" />
+                <img  style={{height: '49px', width:'150px'}} src={techCubeLogo} alt="logo" className="logo-dark" />
             </Link>
             </div>
             <div className="navbar-menu-wrapper d-flex align-items-center flex-grow-1">
@@ -41,7 +47,7 @@ export default function NavBar() {
                     </a>
                     <a className="dropdown-item preview-item">
                     <div className="preview-thumbnail">
-                        <img src="images/faces/face1.jpg" alt="image" className="img-sm profile-pic" />
+                        <img src="https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg" alt="image" className="img-sm profile-pic" />
                     </div>
                     <div className="preview-item-content flex-grow py-2">
                         <p className="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
@@ -53,7 +59,7 @@ export default function NavBar() {
                 
                 <li className="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
                 <a className="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                    <img className="img-xs rounded-circle ml-2" src="" alt="Profile image" /> <span className="font-weight-normal"> admin </span></a>
+                    <img className="img-xs rounded-circle ml-2" src="https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg" alt="Profile image" /> <span className="font-weight-normal"> admin </span></a>
                 <div className="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                     <div className="dropdown-header text-center">
                     <img className="img-xs rounded-circle" src="" alt="Profile image" />
@@ -63,7 +69,7 @@ export default function NavBar() {
 
                     </div>
                     <a className="dropdown-item"><i className="dropdown-item-icon icon-user text-primary"></i> Hồ Sơ </a>
-                    <a href="logout.php" className="dropdown-item" ><i className="dropdown-item-icon icon-power text-primary"></i>Đăng Xuât</a>
+                    <button href="#" className="dropdown-item" onClick={logout}><i className="dropdown-item-icon icon-power text-primary"></i>Đăng Xuât</button>
                 </div>
                 </li>
             </ul>

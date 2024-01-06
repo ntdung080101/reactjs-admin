@@ -6,61 +6,36 @@ export default function SideBar(){
   const [listMenuTitle,setListMenuTitle] = useState([
     {
       title:'Đơn hàng',
-      icon: 'fa-solid fa-truck-fast'
-    },
-    {
-      title: 'Khách hàng',
-      icon: 'fa-solid fa-user'
-    },
-    {
-      title: 'Nhân viên',
-      icon: 'fa-solid fa-solid fa-user-tie'
-    },
-    {
-      title: 'Quản lý',
-      icon: 'fa-solid fa-truck-fast'
-    },
-    {
-      title: 'Sản phẩm',
-      icon: 'fa-solid fa-solid fa-martini-glass'
-    },
-    {
-      title: 'Loại sản phẩm',
-      icon: 'fa-solid fa-solid fa-mug-saucer'
-    },
-    {
-      title: 'Thống kê',
-      icon: 'fa-solid fa-truck-fast'
-    },
-  ])
-
-  const [listLink,setListLink] = useState(
-    [
-      [
+      icon: 'fa-solid fa-truck-fast',
+      listLink: [
         {
             link: 'them_don_hang',
             name: 'Thêm đơn hàng'
         },
         {
             link: 'danh_sach_don_hang_online',
-            name: 'Danh sách đơn hàng online'
+            name: 'Danh sách đơn hàng online '
         },
         {
             link: 'danh_sach_don_hang_tai_quay',
             name: 'Danh sách đơn hàng tại quầy'
         },
       ],
-      [
+    },
+    {
+      title: 'Khách hàng',
+      icon: 'fa-solid fa-user',
+      listLink: [
         {
           link: 'danh_sach_khach_hang',
           name: 'Danh sách khách hàng',
         },
-        {
-          link: 'them_khach_hang',
-          name: 'Thêm khách hàng',
-        }
       ],
-      [
+    },
+    {
+      title: 'Nhân viên',
+      icon: 'fa-solid fa-solid fa-user-tie',
+      listLink: [
         {
           link: 'danh_sach_nhan_vien',
           name: 'Danh sách nhân viên',
@@ -70,17 +45,11 @@ export default function SideBar(){
           name: 'Thêm nhân viên',
         }
       ],
-      [
-        {
-          link: 'danh_sach_nhan_vien',
-          name: 'Danh sách nhân viên',
-        },
-        {
-          link: 'them_nhan_vien',
-          name: 'Thêm nhân viên',
-        }
-      ],
-      [
+    },
+    {
+      title: 'Sản phẩm',
+      icon: 'fa-solid fa-solid fa-martini-glass',
+      listLink: [
         {
           link: 'danh_sach_san_pham',
           name: 'Danh sách sản phẩm',
@@ -90,7 +59,11 @@ export default function SideBar(){
           name: 'Thêm sản phẩm',
         }
       ],
-      [
+    },
+    {
+      title: 'Loại sản phẩm',
+      icon: 'fa-solid fa-solid fa-mug-saucer',
+      listLink: [
         {
           link: 'danh_sach_loai_san_pham',
           name: 'Danh sách lọai sản phẩm',
@@ -100,18 +73,18 @@ export default function SideBar(){
           name: 'Thêm lọai sản phẩm',
         }
       ],
-      [
+    },
+    {
+      title: 'Thống kê',
+      icon: 'fa-solid fa-truck-fast',
+      listLink: [
         {
-          link: 'danh_sach_loai_san_pham',
-          name: 'Danh sách lọai sản phẩm',
+          link: 'thong_ke',
+          name: 'Thống kê',
         },
-        {
-          link: 'them_loai_san_pham',
-          name: 'Thêm lọai sản phẩm',
-        }
       ]
-    ]
-  )
+    },
+  ])
 
   return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
@@ -144,7 +117,7 @@ export default function SideBar(){
           </li>
           <li className="nav-item nav-category"><span className="nav-link">Quản Lý</span></li>
           {/* Main side bar */}
-          {listMenuTitle.map((el,index)=> <SubMenu key={`SubMenu_${index}`} menuTitle={el.title} menuIcon={el.icon} listLink={listLink[index]} subIndex={index} ></SubMenu>)}
+          {listMenuTitle.map((el,index)=> <SubMenu key={`SubMenu_${index}`} menuTitle={el.title} menuIcon={el.icon} listLink={listMenuTitle[index]['listLink']} subIndex={index} ></SubMenu>)}
         </ul>
       </nav>
   )

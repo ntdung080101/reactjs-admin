@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "../utils/axios";
 import { ValidateEmail, ValidatePhoneNumber } from "../utils/data-type";
 import RequestResult from "../components/request/request-result";
+import { Link, useParams } from "react-router-dom";
+import { SERVER_URL } from "../constraint";
 
-const AddStaff = () => {
+const UpdateStaff = () => {
+  const { id } = useParams();
+
   const [token, setToken] = useState(localStorage.getItem("authAdmin") || "");
   const [status, setStatus] = useState(0);
   const [error, setErrors] = useState("");
@@ -14,27 +18,43 @@ const AddStaff = () => {
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [gender, setGender] = useState(0);
+  const [permission, setPermission] = useState(0);
   const [image, setImage] = useState(null);
   const [password, setPassword] = useState("");
 
-  const clear = () => {
-    setName("");
-    setAddress("");
-    setPhoneNumber("");
-    setGender(0);
-    setImage(null);
-    setUsername("");
-    setPassword("");
-  };
+  useEffect(() => {
+    axios
+      .get("staff/get", {
+        params: {
+            code: id
+        }
+      }, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        const data = response.data.message;
 
-  const createAccount = () => {
-    if (!ValidateEmail(username)) {
-      alert(username);
-      setErrors("Email không phù hợp");
-      setSuccess("");
-      return;
-    }
+        console.log(data);
 
+        setUsername(data.ten_dang_nhap)
+        setPermission(data.phan_quyen)
+        setName(data.ten)
+        setAddress(data.dia_chi)
+        setGender(data.gioi_tinh)
+        setPhoneNumber(data.so_dien_thoai)
+        setImage(data.hinh_anh === ''? null:data.hinh_anh)
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      })
+      .finally(() => {
+        setStatus(0);
+      });
+  }, []);
+
+  const updateStaff = () => {
     if (!ValidatePhoneNumber(phoneNumber)) {
       setErrors("Số điện thoại không phù hợp");
       return;
@@ -48,24 +68,31 @@ const AddStaff = () => {
       formData.append("file", image);
     }
 
-    formData.append("username", username);
-    formData.append("password", password);
-    formData.append("name", name);
+    formData.append("code", id);
     formData.append("gender", gender);
+    formData.append("name", name);
+    formData.append("permission", permission);
     formData.append("address", address);
     formData.append("phoneNumber", phoneNumber);
-    formData.append("role", 1);
+
+    console.log(JSON.stringify({
+      code: id,
+      gender,
+      name,
+      permission,
+      address,
+      phoneNumber
+    }))
 
     axios
-      .post("staff/create", formData, {
+      .put("staff/update", formData, {
         headers: {
-          Authorization: "Bearer " + token
+          Authorization: "Bearer " + token,
         },
       })
       .then((reponse) => {
-        setSuccess("Thêm thành công");
+        setSuccess("Cập nhật thành công");
         setErrors("");
-        clear();
       })
       .catch((error) => {
         console.log(JSON.stringify(error));
@@ -75,43 +102,15 @@ const AddStaff = () => {
       });
   };
 
-  const cancel = () => {
-    clear();
-  };
-
   return (
     <div className="row">
       <div className="col-12 grid-margin stretch-card">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">Thêm nhân viên</h4>
+            <h4 className="card-title">Cập nhật nhân viên</h4>
             <RequestResult status={status} error={error} success={success} />
 
             <form name="add_staff" onSubmit={(e) => e.preventDefault()}>
-              <div className="form-group">
-                <label htmlFor="exampleInputUsername1">Tên tài khoản</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="username"
-                  placeholder="username"
-                  name="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleInputUsername1">Mật khẩu</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="password"
-                  placeholder="password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
               <div className="form-group">
                 <label htmlFor="exampleInputUsername1">Tên</label>
                 <input
@@ -165,7 +164,9 @@ const AddStaff = () => {
                 <label htmlFor="exampleInputUsername1">Hình ảnh</label>
                 <img
                   id="thumbnail"
-                  src={image ? URL.createObjectURL(image) : ""}
+                  src={image ? 
+                    typeof(image) === 'string'? 
+                      SERVER_URL + image : URL.createObjectURL(image) : ""}
                   alt="your image"
                   style={{
                     width: "300px",
@@ -180,7 +181,6 @@ const AddStaff = () => {
                     id="image"
                     name="image"
                     placeholder="Image"
-                    value={image}
                     onChange={(e) => setImage(e.target.files[0])}
                   />
                 </div>
@@ -190,13 +190,13 @@ const AddStaff = () => {
                 type="submit"
                 value="submit"
                 className="btn btn-primary mr-2"
-                onClick={createAccount}
+                onClick={updateStaff}
               >
-                Tạo
+                Cập nhật
               </button>
-              <button className="btn btn-light" onClick={cancel}>
-                Hủy
-              </button>
+              <Link to="/danh_sach_nhan_vien" className="btn btn-light">
+                Quay về
+              </Link>
             </form>
           </div>
         </div>
@@ -205,4 +205,4 @@ const AddStaff = () => {
   );
 };
 
-export default AddStaff;
+export default UpdateStaff;

@@ -67,16 +67,16 @@ const ListOrderOnline = () => {
               </thead>
               <tbody>
                 <tr>
-                  <td>ma</td>
-                  <td> ten</td>
-                  <td>01685498</td>
+                  <td>1</td>
+                  <td> Tuấn</td>
+                  <td>0168532498</td>
                   <td className="text-danger"><b>10251 đ </b></td>
                   <td>
-                    101010
+                    10/10/2023
                     </td>
 
-                    <td>description <em>Không có ghi chú</em></td>
-                    <td><label className="<?php echo $badgeClass; ?>">    trang thai </label></td>
+                    <td><em>Không có ghi chú</em></td>
+                    <td><label className="<?php echo $badgeClass; ?>">    Hoàn thành </label></td>
                     <td>
                         <a href="xem_don_hang_online.php?id=<?php echo $row['ma']?>">
                         <i className="fa-solid fa-eye text-success"></i>
