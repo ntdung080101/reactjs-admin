@@ -1,3 +1,4 @@
+
 const ViewOrderOnline = () => {
     return <div class="row">
             <div class="col-12 grid-margin stretch-card">
@@ -6,28 +7,28 @@ const ViewOrderOnline = () => {
                         <h4 class="card-title">Xem thông tin đơn hàng</h4>
                         <form name="sualoai" action="them_nhan_vien.php" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label for="exampleInputUsername1">Tên</label>
+                                <label htmlFor="exampleInputUsername1">Tên</label>
                                 <input type="text" class="form-control" id="name" disabled value="" placeholder="Name" name="name" required />
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputUsername1">Địa chỉ</label>
+                                <label htmlFor="exampleInputUsername1">Địa chỉ</label>
                                 <input type="text" class="form-control" id="name" disabled value="" placeholder="Name" name="name" required />
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputUsername1">Số điện thoại</label>
+                                <label htmlFor="exampleInputUsername1">Số điện thoại</label>
                                 <input type="text" class="form-control" id="name" disabled value="" placeholder="Name" name="name" required />
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputUsername1">Giá</label>
+                                <label htmlFor="exampleInputUsername1">Giá</label>
                                 <input type="text" class="form-control" id="name" value="" disabled placeholder="price" name="price" required />
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputUsername1">Ghi chú</label>
+                                <label htmlFor="exampleInputUsername1">Ghi chú</label>
                                 <textarea type="text" class="form-control" id="name" value="" disabled placeholder="price" name="price" required>
                         </textarea>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputUsername1">Danh sách đã chọn</label>
+                                <label htmlFor="exampleInputUsername1">Danh sách đã chọn</label>
                                 <table class="table table-hover">
                                 <thead>
                                     <tr>  

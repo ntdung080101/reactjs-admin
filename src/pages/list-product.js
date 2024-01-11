@@ -27,20 +27,28 @@ const ListProduct = () => {
 }
 
   useEffect(() => {
-    axios
-      .get("product/list-all", {})
-      .then((response) => {
-        setListProduct(response.data.message);
-        console.log(response.data.message);
-      })
-      .catch((error) => {
-        console.log(JSON.stringify(error));
-      });
+    loadList()
   }, []);
 
+  const loadList = () => {
+    axios
+    .get("product/list", {
+      params: {
+        page: 1,
+      limit: 300
+      }
+    })
+    .then((response) => {
+      setListProduct(response.data.message);
+      console.log(response.data.message);
+    })
+    .catch((error) => {
+      console.log(JSON.stringify(error));
+    });
+  }
   const deleteProduct = (id) => {
     axios.delete(`product/delete`,{
-        data: {
+        params: {
             code: id,
         },
         headers: {
@@ -50,6 +58,7 @@ const ListProduct = () => {
     .then(response=>{
         setStatusMessage("Xóa thành công");
 
+        loadList()
         console.log(JSON.stringify(response))
     })
     .catch(error=>{
