@@ -1,4 +1,131 @@
+import { useEffect, useState } from "react";
+import { SERVER_URL } from "../constraint";
+import axios from '../utils/axios';
+
 const AddOrder = () => {
+    const [listProduct, setListProduct] = useState([]);
+    const [listChoose, setListChoose] = useState([]);
+
+    useEffect(()=>{
+        axios.get('product/list',{
+            params: {
+                page: 1,
+                limit: 500,
+            }
+        })
+        .then(response=> {
+            const data = response.data.message;
+
+            setListProduct(data.data)
+        })
+        .catch(error=>{
+            alert("Sản phẩm không tồn tại!")
+        })
+    },[])
+
+    const addListchoose = (id) =>{
+        const choose = listProduct.find(el=>el.ma===id);
+        const index = listChoose.findIndex(el=>el.ma===id);
+
+        if(choose !== undefined){
+            if(index===-1){
+                setListChoose([...listChoose, choose])
+            }else{
+                if(choose.so_luong > listChoose[index].so_luong + 1){
+                    listChoose[index].so_luong = listChoose[index].so_luong + 1;
+                    setListChoose(listChoose);
+                } else{
+                    alert('Sản phẩm không đủ!')
+                }
+            }
+        }
+
+    }
+
+    const removeListchoose = (id) =>{
+        const index = listChoose.findIndex(el=>el.ma===id);
+        const data = listChoose;
+        if(index!==-1){
+            if(listChoose[index].so_luong === 1){
+
+                setListChoose(data.filter(el=>el.ma!==id));
+            }else{
+                data[index].so_luong = data[index].so_luong - 1;
+                setListChoose(data);
+            } 
+        }
+    }
+
+    const ListProductComponent = () => {
+        return listProduct.length > 0? listProduct.map(el=>{
+            return <tr key={`list_product_${el.ma}`}>
+            <td>
+                {el.ma}
+            </td>
+            <td>
+                <img src={`${SERVER_URL}${el.imagePath[0]}`}/>
+            </td>
+            <td>
+                {el.ten}
+            </td>
+            <td>
+                {el.gia}
+            </td>
+            <td>
+                {el.ten}
+            </td>
+            <td>
+                {el.mo_ta.length > 15? el.mo_ta.slice(0,15):el.mo_ta}
+            </td>
+            <td>
+                <button  style={{outline:'none',border:'none'}} onClick={() => addListchoose(el.ma)}>
+                    <i className="fa-solid fa-plus text-success"></i>
+                </button>
+                &nbsp;
+            </td>
+        </tr>
+        }):<tr>
+            <td colSpan={5}>Chưa có sản phẩm</td>
+        </tr>
+    } 
+
+    let ListChooseComponent = () => {
+        return listChoose.length > 0? listChoose.map(el=>{
+            return <tr key={`list_choose_${el.ma}`}>
+            <td>
+                {el.ma}
+            </td>
+            <td>
+                <img src={`${SERVER_URL}${el.imagePath[0]}`}/>
+            </td>
+            <td>
+                {el.ten}
+            </td>
+            <td>
+                {el.so_luong}
+            </td>
+            <td>
+                {el.gia}
+            </td>
+            <td>
+                {el.mo_ta.length > 15? el.mo_ta.slice(0,15):el.mo_ta}
+            </td>
+            <td>
+                <button  style={{outline:'none',border:'none'}} onClick={() => addListchoose(el.ma)}>
+                    <i className="fa-solid fa-plus text-success"></i>
+                </button>
+                &nbsp;
+                <button  style={{outline:'none',border:'none'}} onClick={() => removeListchoose(el.ma)}>
+                    <i className="fa-solid fa-trash text-danger"></i>
+                </button>
+            </td>
+        </tr>
+        }):<tr>
+            <td colSpan={5}>Chưa chọn sản phẩm</td>
+        </tr>
+    }
+
+
     return <div className="row">
             <div className="col-12 grid-margin stretch-card">
                 <div className="card">
@@ -6,11 +133,11 @@ const AddOrder = () => {
                         <h4 className="card-title">Thêm đơn hàng</h4>
                         <form name="sualoai" action="them_don_hang.php" method="POST">
                             <div className="form-group">
-                                <label for="exampleInputUsername1">Tên</label>
+                                <label htmlFor="exampleInputUsername1">Tên</label>
                                 <input type="text" className="form-control" id="name"  placeholder="Name" name="name" required />
                             </div>
                             <div className="form-group">
-                                <label for="exampleInputUsername2">Giá</label>
+                                <label htmlFor="exampleInputUsername2">Giá</label>
                                 <input type="text" className="form-control" id="exampleInputUsername2" value="" disabled placeholder="" name="price" required />
                             </div>
                         
@@ -22,7 +149,7 @@ const AddOrder = () => {
                         <br/>
                         <br/>
                         <div className="form-group">
-                                <label for="exampleInputUsername1">Danh sách đã chọn</label>
+                                <label htmlFor="exampleInputUsername1">Danh sách đã chọn</label>
                                 <table className="table table-hover">
                                 <thead>
                                     <tr>  
@@ -39,7 +166,7 @@ const AddOrder = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    <ListChooseComponent />
                                 </tbody>
                             </table>
                             </div>
@@ -48,7 +175,7 @@ const AddOrder = () => {
                         <br/>
                         <br/>
                         <br/>
-                        <label for="exampleInputUsername1">Danh sách chọn</label>
+                        <label htmlFor="exampleInputUsername1">Danh sách chọn</label>
                         <table className="table table-hover">
                                 <thead>
                                     <tr>  
@@ -65,31 +192,7 @@ const AddOrder = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            <img src="https://cdn.tgdd.vn/Products/Images/44/313084/Slider/vi-vn-hp-15s-fq5229tu-i3-8u237pa-slider-2.jpg"/>
-                                        </td>
-                                        <td>
-                                            Laptop HP thinkpad i5 8/256GB 
-                                        </td>
-                                        <td>
-                                            12500000
-                                        </td>
-                                        <td>
-                                            Laptop văn phòng
-                                        </td>
-                                        <td>
-                                         Laptop HP sử dụng bộ vi xử lý Intel Core i5...
-                                        </td>
-                                        <td>
-                                        <a  href="xoa_don_hang_online.php?id=<?php echo $row['ma']?>">
-                        <i className="fa-solid fa-trash text-danger"></i>
-                        </a>
-                                        </td>
-                                    </tr>
+                                    <ListProductComponent />
                                 </tbody>
                             </table>
                     </div>

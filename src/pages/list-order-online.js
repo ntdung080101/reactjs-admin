@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from '../utils/axios';
 import { formatMoney } from "../utils/format-money";
 import { ORDER_STATUS } from "../utils/order-status";
+import { Link } from "react-router-dom";
 
 const ListOrderOnline = () => {
   const [listOrder, setListOrder] = useState([]);
@@ -36,17 +37,14 @@ const ListOrderOnline = () => {
               
               </td>
               <td>
-                  <a href="xem_don_hang_online.php?id=<?php echo $row['ma']?>">
-                  <i className="fa-solid fa-eye text-success"></i>
-                  </a>
-                  &nbsp;
-                  <a  href="sua_don_hang_online.php?id=<?php echo $row['ma']?>">
-                  <i className="fa-solid fa-pen text-warning"></i>
-                  </a>
-                  &nbsp;
-                  <a  href="xoa_don_hang_online.php?id=<?php echo $row['ma']?>">
-                  <i className="fa-solid fa-trash text-danger"></i>
-                  </a>
+                    <Link to={`/xem_don_hang_online/${el.ma}`}>
+                        <i className="fa-solid fa-eye text-success"></i>
+                    </Link>
+                    &nbsp;
+                    <Link to={`/sua_don_hang_online/${el.ma}`}>
+                        <i className="fa-solid fa-pen text-warning"></i>
+                    </Link>
+                    &nbsp;
               </td>            
           </tr>
           })

@@ -1,5 +1,10 @@
+import { useState } from "react";
 
 const ViewOrderOnline = () => {
+    const [name, setName] = useState('');
+    const [address, setAddress] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [price, setPrice] = useState(0);
     return <div class="row">
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
@@ -21,11 +26,6 @@ const ViewOrderOnline = () => {
                             <div class="form-group">
                                 <label htmlFor="exampleInputUsername1">Giá</label>
                                 <input type="text" class="form-control" id="name" value="" disabled placeholder="price" name="price" required />
-                            </div>
-                            <div class="form-group">
-                                <label htmlFor="exampleInputUsername1">Ghi chú</label>
-                                <textarea type="text" class="form-control" id="name" value="" disabled placeholder="price" name="price" required>
-                        </textarea>
                             </div>
                             <div class="form-group">
                                 <label htmlFor="exampleInputUsername1">Danh sách đã chọn</label>

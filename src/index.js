@@ -52,7 +52,9 @@ root.render(
           {/* order */}
           <Route path="them_don_hang" element={<AddOrder />}></Route>
           <Route path="danh_sach_don_hang_tai_quay" element={<ListOrderLocal />}></Route>
+          <Route path="xem_don_hang_tai_quay/:id" element={<ViewOrderOnline />}></Route>
           <Route path="danh_sach_don_hang_online" element={<ListOrderOnline />}></Route>
+          <Route path="xem_don_hang_online/:id" element={<ViewOrderOnline />}></Route>
           {/* customer */}
           <Route path="danh_sach_khach_hang" element={<ListCustomer />}></Route>
           <Route path="xem_khach_hang/:id" element={<ViewCustomer />}></Route>

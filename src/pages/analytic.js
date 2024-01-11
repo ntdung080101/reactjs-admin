@@ -12,6 +12,8 @@ import {
   Bar,
 } from "react-chartjs-2";
 import { formatMoney } from '../utils/format-money';
+import { useEffect, useState } from 'react';
+import axios from '../utils/axios';
 
 ChartJS.register(
   CategoryScale,
@@ -23,6 +25,65 @@ ChartJS.register(
 );
 
 const Analytic = () => {
+  const [listOrder, setListOrder] = useState([]);
+  const [order0, setListOrder0] = useState([]);
+  const [order1, setListOrder1] = useState([]);
+  const [order2, setListOrder2] = useState([]);
+  const [order3, setListOrder3] = useState([]);
+
+  const [detailOrder, setDetailOrder] = useState({});
+
+  useEffect(()=>{
+    axios.get('order/list-all')
+    .then(result=>{
+      const data = result.data.message;
+      setListOrder(data);
+      for(let index = 0;index<data.length;index++){
+        const order = data[index];
+
+        switch(order.loai){
+          case 0:
+            order0.push(data);
+            setListOrder0(order0)
+            break;
+          case 1:
+            order1.push(data);
+            setListOrder0(order1)
+            break;
+          case 2:
+            order2.push(data);
+            setListOrder0(order2)
+            break;
+          case 3:
+            order3.push(data);
+            setListOrder0(order3)
+            break;
+
+          default:
+            break;
+        }
+
+        axios.get('detail-order/list-all',{
+          params:{
+            orderCode: order.ma,
+          }
+        })
+        .then(res=>{
+          const listDetail = res.data.message;
+
+          detailOrder[order.ma] = listDetail;
+          setDetailOrder(listDetail)
+        })  
+        .catch(err=>{
+          console.log(err);
+        })
+      }
+    })
+    .catch(error=>{
+      console.log(error);
+    })
+  },[]);
+
   return (
     <>
       <div className="row">
@@ -110,7 +171,11 @@ const Analytic = () => {
         <div className="col-md-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title">Đơn hàng theo tháng 12: 44</h4>
+              <h4 className="card-title">Đơn hàng theo tháng 12: {listOrder.filter(el=>{
+                const date = new Date(el.ngay_dat);
+                const now = new Date();
+                return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
+              }).length}</h4>
                 <Bar
                   id="1"
                   data={{
@@ -123,7 +188,7 @@ const Analytic = () => {
                     datasets: [
                       {
                         label: "Đơn hàng",
-                        data: [12, 19, 3, 5, 2, 3],
+                        data: [order0.length, order1.length, order2.length, order3.length],
                         borderWidth: 1,
                         backgroundColor:['yellow','green','blue','red']
                       },
